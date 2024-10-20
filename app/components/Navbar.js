@@ -4,21 +4,35 @@ import React, { useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import Link from "next/link";
-import Image from "next/image"; // Best practice for images in Next.js
 import { useUserContext } from "../context/userContext";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
-  // Example user object
   const { user } = useUserContext();
   console.log(user);
 
   const navLinks = [
     { name: "Home", href: "/", isProtected: false },
-    { name: "Listing", href: "/menu", isProtected: false },
-    { name: "Booking History", href: "/popular", isProtected: true },
-    { name: "Add Room", href: "/addfood", isProtected: true },
+    { name: "Listing", href: "/listing", isProtected: false },
+    {
+      name: "Booking History",
+      href: "/bookinghistory",
+      isProtected: true,
+      isAdmin: false,
+    },
+    {
+      name: "Add Room",
+      href: "/admin/addroom",
+      isProtected: true,
+      isAdmin: true,
+    },
+    {
+      name: "Booking History (Admin)",
+      href: "/admin/bookinghistory",
+      isProtected: true,
+      isAdmin: true,
+    },
   ];
 
   const handleNav = () => {
@@ -43,12 +57,13 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Links */}
         <nav className="hidden lg:flex space-x-8 items-center">
-          {navLinks.map(
-            (link, index) =>
-              (!link.isProtected ||
-                (link.isProtected && user?.role === "admin")) && (
+          {navLinks.map((link, index) => {
+            const isAdminLink = link.isAdmin && user?.role === "admin";
+            const isProtectedLink = link.isProtected && user;
+
+            return (
+              (!link.isProtected || isAdminLink || (!link.isAdmin && user)) && (
                 <Link
                   key={index}
                   href={link.href}
@@ -57,7 +72,8 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               )
-          )}
+            );
+          })}
 
           {user ? (
             <div className="dropdown dropdown-end">
@@ -132,9 +148,9 @@ const Navbar = () => {
         {/* Mobile Menu Icon */}
         <div className="block lg:hidden z-40" onClick={handleNav}>
           {nav ? (
-            <RxCross2 size={25} className="text-[#1E40AF]  cursor-pointer" />
+            <RxCross2 size={25} className="text-[#1E40AF] cursor-pointer" />
           ) : (
-            <TiThMenu size={25} className="text-[#1E40AF]  cursor-pointer" />
+            <TiThMenu size={25} className="text-[#1E40AF] cursor-pointer" />
           )}
         </div>
       </div>
@@ -145,39 +161,39 @@ const Navbar = () => {
         } pt-24`}
       >
         <div className="flex flex-col gap-8">
-          <a
-            href=""
-            className="text-[#191919] text-base font-medium hover:text-red-500"
-          >
-            Today Special
-          </a>
-          <a
-            href=""
-            className="text-[#191919] text-base font-medium hover:text-red-500"
-          >
-            Why foodHunt
-          </a>
-          <a
-            href=""
-            className="text-[#191919] text-base font-medium hover:text-red-500"
-          >
-            Our Menu
-          </a>
-          <a
-            href=""
-            className="text-[#191919] text-base font-medium hover:text-red-500"
-          >
-            Add food
-          </a>
-          <a
-            href=""
-            className="text-[#191919] text-base font-medium hover:text-red-500"
-          >
-            Popular food
-          </a>
-          <button className=" bg-[#F54748] active:scale-90 transition duration-100 transform hover:shadow-xl shadow-md rounded-full px-8 py-2 text-xl font-medium text-white">
-            login
-          </button>
+          {navLinks.map((link, index) => {
+            const isAdminLink = link.isAdmin && user?.role === "admin";
+            const isProtectedLink = link.isProtected && user;
+
+            return (
+              (!link.isProtected || isAdminLink || (!link.isAdmin && user)) && (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className="text-[#191919] text-base font-medium hover:text-red-500"
+                >
+                  {link.name}
+                </Link>
+              )
+            );
+          })}
+          {user ? (
+            <button
+              onClick={() => {
+                localStorage.clear();
+                location.reload();
+              }}
+              className="bg-[#F54748] active:scale-90 transition duration-100 transform hover:shadow-xl shadow-md rounded-full px-8 py-2 text-xl font-medium text-white"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login">
+              <button className="bg-[#F54748] active:scale-90 transition duration-100 transform hover:shadow-xl shadow-md rounded-full px-8 py-2 text-xl font-medium text-white">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
