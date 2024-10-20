@@ -4,47 +4,44 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useUserContext } from "../context/userContext";
 
-const Login = () => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const { setReload } = useUserContext();
+const ForgetPassword = () => {
+  const [loading, setLoading] = useState(false); // State for loading
+  const router = useRouter(); // To navigate after successful ForgetPassword
 
-  const handleLogin = async (event) => {
+  // Handle form submission
+  const handleForgetPassword = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
-    const password = form.password.value;
 
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/v1/users/forgetPassword",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       const res = await response.json();
-      console.log(res);
-
+      // Check if the response is successful
       if (res.status === "success") {
-        localStorage.setItem("token", res.token);
         toast.success(res.message);
-
         setTimeout(() => {
-          setReload(true);
-          router.push("/");
+          router.push("/resetpassword");
         }, 2000);
       } else {
         toast.error(res.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Login failed. Please try again.");
+      toast.error("ForgetPassword failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -55,16 +52,19 @@ const Login = () => {
       <div className="pt-[10vh]">
         <div className="h-screen py-10">
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleForgetPassword} // Handle form submission
             className="ease-in duration-300 w-[80%] sm:w-max shadow-sm backdrop-blur-md bg-gray-300/70 lg:w-max mx-auto flex flex-col items-center rounded-md px-8 py-10"
           >
             <Link href="/">
               <span className="ml-2 text-3xl font-semibold text-[#1E40AF]">
-                Homez
+                Forget Password
               </span>
             </Link>
             <div className="mb-4 mt-4">
-              <label className="block text-gray-700 font-medium text-sm mb-2">
+              <label
+                className="block text-gray-700 font-medium text-sm mb-2"
+                htmlFor="email"
+              >
                 Email
               </label>
               <input
@@ -72,33 +72,16 @@ const Login = () => {
                 placeholder="Enter your email"
                 name="email"
                 className="shadow-sm bg-white appearance-none border rounded w-full py-3 px-3 sm:w-[20rem] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
+                required // Make email required
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium text-sm mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="**********"
-                name="password"
-                className="shadow-sm bg-white appearance-none border rounded w-full py-3 px-3 sm:w-[20rem] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              />
-            </div>
-            <Link
-              href="/forgetpassword"
-              className="text-[#2a2723] text-left font-semibold w-full mb-3 rounded"
-            >
-              Forgot Password?
-            </Link>
+
             <button
               className="bg-[#F59E0B] active:scale-90 transition duration-150 transform hover:shadow-xl shadow-md w-full rounded-sm px-8 py-2 text-xl font-medium text-white mx-auto text-center"
               type="submit"
-              disabled={loading}
+              disabled={loading} // Disable button while loading
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Sending..." : "Send"} {/* Show loading state */}
             </button>
 
             <Link
@@ -115,4 +98,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;
