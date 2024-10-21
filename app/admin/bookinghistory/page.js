@@ -57,7 +57,7 @@ const BookingHistory = () => {
         }
       );
       const res = await response.json();
-
+      console.log(res);
       if (res.success) {
         toast.success("Booking approved successfully!");
         setBookings((prev) =>

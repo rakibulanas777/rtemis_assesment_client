@@ -63,13 +63,7 @@ const RoomCard = ({ room }) => {
             </button>
           </div>
         )}
-        {user?.role !== "admin" && (
-          <div className="absolute top-2 right-2">
-            <button className="shadow-sm w-10 h-10  text-white bg-red-500 hover:bg-red-700 cursor-pointer p-3 rounded-full relative">
-              <FaHeart className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2" />
-            </button>
-          </div>
-        )}
+
         {user?.role === "admin" && (
           <Link href={`/admin/edit/${room._id}`} scroll={false}>
             <div className="absolute top-2 left-2">
