@@ -14,7 +14,7 @@ const BookingHistory = () => {
     const fetchBookings = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/booking/user/${user?._id}`,
+          `https://rtemis-assesment-server-2.onrender.com/api/v1/booking/all-booking`,
           {
             method: "GET",
             headers: {
@@ -24,6 +24,7 @@ const BookingHistory = () => {
         );
         const res = await response.json();
 
+        console.log(res);
         if (res.success === true) {
           setBookings(res.bookings);
         } else {
@@ -45,7 +46,7 @@ const BookingHistory = () => {
   const handleApprove = async (bookingId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/booking/${bookingId}/approve`,
+        `https://rtemis-assesment-server-2.onrender.com/api/v1/booking/${bookingId}/approve`,
         {
           method: "PATCH",
           headers: {
@@ -77,7 +78,7 @@ const BookingHistory = () => {
   const handleCancel = async (bookingId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/booking/${bookingId}/cancel`,
+        `https://rtemis-assesment-server-2.onrender.com/api/v1/booking/${bookingId}/cancel`,
         {
           method: "PATCH",
           headers: {
@@ -146,10 +147,10 @@ const BookingHistory = () => {
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {booking.user.name}
+                      {booking.user?.name}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {booking.room.title}
+                      {booking.room?.title}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
                       {new Date(booking.startDate).toLocaleDateString()}
@@ -158,7 +159,7 @@ const BookingHistory = () => {
                       {new Date(booking.endDate).toLocaleDateString()}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      ${booking.room.rent}
+                      ${booking.room?.rent}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
                       <button

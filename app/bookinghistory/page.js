@@ -14,7 +14,7 @@ const BookingHistory = () => {
     const fetchBookings = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/booking/user/${user?._id}`,
+          `https://rtemis-assesment-server-2.onrender.com/api/v1/booking/user/${user?._id}`,
           {
             method: "GET",
             headers: {

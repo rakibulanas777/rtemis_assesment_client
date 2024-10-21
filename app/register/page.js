@@ -34,7 +34,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/signup",
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/users/signup",
         {
           method: "POST",
           headers: {
@@ -51,7 +51,7 @@ const Register = () => {
         toast.success(res.message);
 
         setTimeout(() => {
-          setReload(true);
+          setReload((prev) => !prev);
           router.push("/");
         }, 2000);
       } else {

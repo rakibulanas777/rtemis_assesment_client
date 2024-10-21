@@ -20,13 +20,16 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const res = await response.json();
       console.log(res);
@@ -36,7 +39,7 @@ const Login = () => {
         toast.success(res.message);
 
         setTimeout(() => {
-          setReload(true);
+          setReload((prev) => !prev);
           router.push("/");
         }, 2000);
       } else {

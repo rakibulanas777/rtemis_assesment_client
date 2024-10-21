@@ -36,7 +36,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/resetPassword",
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/users/resetPassword",
         {
           method: "POST",
           headers: {

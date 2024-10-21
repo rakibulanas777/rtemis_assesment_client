@@ -10,9 +10,11 @@ const Banner = () => {
         <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
           Not sure where to go? Perfect.
         </p>
-        <button className="px-10 py-4 my-3 font-bold bg-white shadow-md rounded-full text-purple-500 active:scale-90 transition duration-150 transform hover:shadow-xl">
-          explore
-        </button>
+        <a href="#explore">
+          <button className="px-10 py-4 my-3 font-bold bg-white shadow-md rounded-full text-purple-500 active:scale-90 transition duration-150 transform hover:shadow-xl">
+            explore
+          </button>
+        </a>
       </div>
     </div>
   );

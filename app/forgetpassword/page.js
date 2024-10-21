@@ -19,7 +19,7 @@ const ForgetPassword = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/forgetPassword",
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/users/forgetPassword",
         {
           method: "POST",
           headers: {

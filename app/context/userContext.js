@@ -19,7 +19,7 @@ const UserProvider = ({ children }) => {
     setLoading(true); // Start loading
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/current-user",
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/users/current-user",
         {
           method: "GET",
           headers: {

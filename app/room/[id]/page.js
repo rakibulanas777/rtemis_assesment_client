@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/context/userContext";
 import { ToastContainer, toast } from "react-toastify";
+import { FaLocationDot } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const RoomDetails = ({ params }) => {
@@ -21,7 +22,7 @@ const RoomDetails = ({ params }) => {
     const fetchRoom = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/rooms/getRoom/${id}`
+          `https://rtemis-assesment-server-2.onrender.com/api/v1/rooms/getRoom/${id}`
         );
         const res = await response.json();
 
@@ -50,18 +51,21 @@ const RoomDetails = ({ params }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user?._id,
-          room: id,
-          startDate: bookingDates.startDate,
-          endDate: bookingDates.endDate,
-        }),
-      });
+      const response = await fetch(
+        "https://rtemis-assesment-server-2.onrender.com/api/v1/booking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user?._id,
+            room: id,
+            startDate: bookingDates.startDate,
+            endDate: bookingDates.endDate,
+          }),
+        }
+      );
 
       const res = await response.json();
 
@@ -70,7 +74,7 @@ const RoomDetails = ({ params }) => {
         // Optional: Redirect after booking
         // router.push(`/rooms/${id}`);
       } else {
-        toast.error(res.message); // Show error notification if booking fails
+        toast.error(res.message);
       }
     } catch (error) {
       console.error("Error booking the room:", error);
@@ -92,38 +96,46 @@ const RoomDetails = ({ params }) => {
         <div>
           <div className="room_images bg-gray-50/[.04] border rounded mb-5 p-4">
             <img
-              src={room.picture}
+              src={room?.picture}
               className="w-full h-[28rem] object-cover"
-              alt={room.title}
+              alt={room?.title}
             />
           </div>
         </div>
 
         <div className="room-data border rounded p-4 text-black mb-5">
           <div className="text-2xl mb-2 font-semibold text-red-900">
-            {room.title}
+            {room?.title}
           </div>
-          <div className="text-xl mb-2 font-semibold">
-            Rent: <b className="text-red-900">${room.rent}</b>
+          <div className="text-base mb-2 font-semibold">
+            Rent: <b className="text-red-900">${room?.rent}</b>
           </div>
-          <div className="text-xl mb-2 font-semibold">
+          <div className="text-base mb-2 font-semibold">
             Facilities:{" "}
-            <b className="text-red-900">{room.facilities.join(", ")}</b>
+            <b className="text-red-900">{room?.facilities.join(", ")}</b>
           </div>
-
+          <div className="text-base mb-2 font-semibold">
+            Details: <b className="text-red-900">{room?.details}</b>
+          </div>
+          <div className="text-base  flex gap-2 items-center mb-2 font-semibold">
+            <FaLocationDot className="text-red-900" />
+            Location: <b className="text-red-900">{room?.location}</b>
+          </div>
+          <div className="text-base mb-1"> Starting Date</div>
           <input
             type="date"
             name="startDate"
-            value={bookingDates.startDate}
+            value={bookingDates?.startDate}
             onChange={handleDateChange}
-            className="mt-2 w-full border rounded p-2"
+            className="mb-2 w-full border rounded p-2"
           />
+          <div className="text-base mb-1"> Ending Date</div>
           <input
             type="date"
             name="endDate"
-            value={bookingDates.endDate}
+            value={bookingDates?.endDate}
             onChange={handleDateChange}
-            className="mt-2 w-full border rounded p-2"
+            className="mb-2 w-full border rounded p-2"
           />
 
           <button

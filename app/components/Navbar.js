@@ -93,37 +93,6 @@ const Navbar = () => {
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
               >
                 <li>
-                  <Link
-                    href="/profile"
-                    className="text-[#1E293B] font-medium hover:text-[#F59E0B]"
-                  >
-                    Profile
-                  </Link>
-                </li>
-                {user?.role === "admin" && (
-                  <li>
-                    <Link
-                      href="/all-order"
-                      className="text-[#1E293B] font-medium hover:text-[#F59E0B]"
-                    >
-                      All Order
-                    </Link>
-                  </li>
-                )}
-                <li>
-                  <Link
-                    href="/my-order"
-                    className="text-[#1E293B] font-medium hover:text-[#F59E0B]"
-                  >
-                    My Order
-                  </Link>
-                </li>
-                <li>
-                  <a className="text-[#1E293B] font-medium hover:text-[#F59E0B]">
-                    Settings
-                  </a>
-                </li>
-                <li>
                   <button
                     onClick={() => {
                       localStorage.clear();
