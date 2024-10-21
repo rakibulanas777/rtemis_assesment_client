@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/context/userContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { Blocks } from "react-loader-spinner";
 
 const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
@@ -42,7 +43,22 @@ const BookingHistory = () => {
     }
   }, [user]);
 
-  if (loading) return <div className="text-center py-4">Loading...</div>;
+  if (loading)
+    return (
+      <div className=" h-screen">
+        <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto w-32">
+          <Blocks
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            visible={true}
+          />
+        </div>
+      </div>
+    );
 
   return (
     <div className=" pt-[16vh]">
@@ -83,24 +99,24 @@ const BookingHistory = () => {
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {booking.user.name}
+                      {booking.user?.name}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {booking.room.title}
+                      {booking?.room?.title}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {new Date(booking.startDate).toLocaleDateString()}
+                      {new Date(booking?.startDate).toLocaleDateString()}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      {new Date(booking.endDate).toLocaleDateString()}
+                      {new Date(booking?.endDate).toLocaleDateString()}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
-                      ${booking.room.rent}
+                      ${booking?.room?.rent}
                     </td>
                     <td className="border-b py-3 px-4 text-sm text-gray-700">
                       <button
                         className={`py-1 px-2 rounded font-semibold text-white ${
-                          booking.status === "booked"
+                          booking?.status === "booked"
                             ? "bg-yellow-500"
                             : booking.status === "approved"
                             ? "bg-green-500"

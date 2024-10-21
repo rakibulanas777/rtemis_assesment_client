@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "@/app/context/userContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { Blocks } from "react-loader-spinner";
 
 const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
@@ -103,7 +104,22 @@ const BookingHistory = () => {
     }
   };
 
-  if (loading) return <div className="text-center py-4">Loading...</div>;
+  if (loading)
+    return (
+      <div className=" h-screen">
+        <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto w-32">
+          <Blocks
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            visible={true}
+          />
+        </div>
+      </div>
+    );
 
   return (
     <div className="pt-[16vh]">
