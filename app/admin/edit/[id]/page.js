@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRoomContext } from "@/app/context/roomContext";
+import withAuth from "@/app/components/withAuth";
 
 const EditRoom = ({ params }) => {
   const { id } = params;
@@ -202,4 +203,4 @@ const EditRoom = ({ params }) => {
   );
 };
 
-export default EditRoom;
+export default withAuth(EditRoom);

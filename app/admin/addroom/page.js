@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRoomContext } from "@/app/context/roomContext";
+import withAuth from "@/app/components/withAuth";
 
 const AddRoom = () => {
   const [image, setImage] = useState(null);
@@ -158,4 +159,4 @@ const AddRoom = () => {
   );
 };
 
-export default AddRoom;
+export default withAuth(AddRoom);

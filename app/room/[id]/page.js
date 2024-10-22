@@ -6,6 +6,7 @@ import { useUserContext } from "@/app/context/userContext";
 import { ToastContainer, toast } from "react-toastify";
 import { FaLocationDot } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+import { Blocks } from "react-loader-spinner";
 
 const RoomDetails = ({ params }) => {
   const { id } = params;
@@ -45,6 +46,10 @@ const RoomDetails = ({ params }) => {
   const { user } = useUserContext();
 
   const handleBooking = async () => {
+    if (!user) {
+      router.push("/login");
+    }
+
     if (!bookingDates.startDate || !bookingDates.endDate) {
       toast.warn("Please select both start and end dates for booking.");
       return;
@@ -72,7 +77,7 @@ const RoomDetails = ({ params }) => {
       if (res.status === "success") {
         toast.success("Room booked successfully!"); // Show success notification
         // Optional: Redirect after booking
-        // router.push(`/rooms/${id}`);
+        router.push(`listing`);
       } else {
         toast.error(res.message);
       }
@@ -86,7 +91,22 @@ const RoomDetails = ({ params }) => {
     setBookingDates({ ...bookingDates, [e.target.name]: e.target.value });
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className=" h-screen">
+        <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto w-32">
+          <Blocks
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            visible={true}
+          />
+        </div>
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   return (

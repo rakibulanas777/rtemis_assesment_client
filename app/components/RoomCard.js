@@ -38,6 +38,7 @@ const RoomCard = ({ room }) => {
     }
   };
 
+  console.log(room?.picture);
   return (
     <div
       className="card h-full bg-white w-full shadow-sm rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg border p-3"

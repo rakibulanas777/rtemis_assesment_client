@@ -5,6 +5,7 @@ import { useUserContext } from "@/app/context/userContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 import { Blocks } from "react-loader-spinner";
+import withAuth from "@/app/components/withAuth";
 
 const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
@@ -220,4 +221,4 @@ const BookingHistory = () => {
   );
 };
 
-export default BookingHistory;
+export default withAuth(BookingHistory);
